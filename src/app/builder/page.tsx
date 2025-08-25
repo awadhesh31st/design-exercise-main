@@ -1,9 +1,9 @@
 'use client'
 
 import { FormBuilderCanvas } from '@/components/canvas'
-import ComponentLibrary from '@/components/ComponentLibrary'
+import ComponentLibrary from '@/components/componentLibrary'
 import { Header } from '@/components/header'
-import PropertyPanel from '@/components/PropertyPanel'
+import PropertyPanel from '@/components/propertyPanel'
 import { useFormStore } from '@/lib/store'
 
 const BuilderPage = () => {

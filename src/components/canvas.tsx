@@ -2,10 +2,18 @@ import { useFormStore } from '@/lib/store'
 import { Plus } from 'lucide-react'
 import { Button } from './ui/button'
 import { Card } from './ui/card'
-import PreviewFormField from './PreviewFormField'
+import PreviewFormField from './previewFormField'
+import DraggableFormField from './draggableFormField'
 
 const FormBuilderCanvas = () => {
-  const { mode, fields } = useFormStore()
+  const { mode, fields, selectedFieldId, draggedIndex, setDraggedIndex, moveField } = useFormStore()
+
+  const handleDrop = (toIndex: number) => {
+    if (draggedIndex !== null && draggedIndex !== toIndex) {
+      moveField(draggedIndex, toIndex)
+    }
+    setDraggedIndex(null)
+  }
 
   if (fields.length === 0) {
     return (
@@ -59,7 +67,18 @@ const FormBuilderCanvas = () => {
         </div>
 
         <div className="space-y-6">
-          {mode === 'builder' ? <div>dd</div> : fields.map((field) => <PreviewFormField key={field.id} field={field} />)}
+          {mode === 'builder'
+            ? fields.map((field, index) => (
+                <DraggableFormField
+                  key={field.id}
+                  field={field}
+                  index={index}
+                  isSelected={selectedFieldId === field.id}
+                  isDragging={draggedIndex === index}
+                  onDrop={handleDrop}
+                />
+              ))
+            : fields.map((field) => <PreviewFormField key={field.id} field={field} />)}
         </div>
 
         {mode === 'preview' && fields.length > 0 && (

@@ -64,3 +64,11 @@ type FormStore = {
 type PreviewFormFieldProps = {
   field: FormField
 }
+
+type DraggableFormFieldProps = {
+  field: FormField
+  index: number
+  isSelected: boolean
+  isDragging: boolean
+  onDrop: (index: number) => void
+}

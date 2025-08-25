@@ -57,6 +57,9 @@ type FormStore = {
   setDraggedIndex: (index: number | null) => void
   undo: () => void
   redo: () => void
+}
+
+type HeaderProps = {
   canUndo: boolean
   canRedo: boolean
 }

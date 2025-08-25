@@ -7,13 +7,13 @@ import PropertyPanel from '@/components/propertyPanel'
 import { useFormStore } from '@/lib/store'
 
 const BuilderPage = () => {
-  const { mode } = useFormStore()
+  const { mode, historyIndex, history } = useFormStore()
 
   console.log('mode', mode)
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      <Header canUndo={historyIndex > 0} canRedo={historyIndex < history.length - 1} />
       <div className="flex h-[calc(100vh-89px)]">
         {mode === 'builder' && <ComponentLibrary />}
         <FormBuilderCanvas />

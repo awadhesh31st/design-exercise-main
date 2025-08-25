@@ -160,9 +160,6 @@ export const useFormStore = create<FormStore>()(
             }
           })
         },
-
-        canUndo: false,
-        canRedo: false,
       }),
       {
         name: 'form-store',

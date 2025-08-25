@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Settings, Eye, Undo, Redo } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { useFormStore } from '@/lib/store'
 
-const Header = () => {
-  const { fields, mode, setMode, undo, redo, canUndo, canRedo } = useFormStore()
+const Header: FC<HeaderProps> = ({ canUndo, canRedo }) => {
+  const { fields, mode, setMode, undo, redo } = useFormStore()
   const fieldsCount = fields.length
 
   return (
@@ -23,10 +23,10 @@ const Header = () => {
 
           {mode === 'builder' && (
             <div className="flex items-center gap-1 pl-6 border-l border-gray-200 ">
-              <Button variant="ghost" size="sm" onClick={undo} disabled={!canUndo} title="Undo (Ctrl+Z)">
+              <Button variant="ghost" size="sm" onClick={undo} disabled={!canUndo} title="Undo (Ctrl+Z)" className="cursor-pointer">
                 <Undo className="w-4 h-4" />
               </Button>
-              <Button variant="ghost" size="sm" onClick={redo} disabled={!canRedo} title="Redo (Ctrl+Y)">
+              <Button variant="ghost" size="sm" onClick={redo} disabled={!canRedo} title="Redo (Ctrl+Y)" className="cursor-pointer">
                 <Redo className="w-4 h-4" />
               </Button>
             </div>

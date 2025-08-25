@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "npx prettier . --write"
   },
   "dependencies": {
     "next": "15.3.3",
@@ -25,6 +26,7 @@
     "eslint-config-next": "15.3.3",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.513.0",
+    "prettier": "3.6.2",
     "react-hook-form": "^7.57.0",
     "tailwind-merge": "^3.3.0",
     "tailwindcss": "^4",

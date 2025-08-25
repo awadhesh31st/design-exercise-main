@@ -1,70 +1,62 @@
-"use client";
+'use client'
 
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
-import * as React from 'react';
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
+import * as React from 'react'
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils'
 
 interface SelectContextValue {
-  value?: string;
-  onValueChange?: (value: string) => void;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  placeholder?: string;
+  value?: string
+  onValueChange?: (value: string) => void
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  placeholder?: string
 }
 
-const SelectContext = React.createContext<SelectContextValue | null>(null);
+const SelectContext = React.createContext<SelectContextValue | null>(null)
 
 interface SelectProps {
-  value?: string;
-  defaultValue?: string;
-  onValueChange?: (value: string) => void;
-  open?: boolean;
-  defaultOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  children: React.ReactNode;
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  open?: boolean
+  defaultOpen?: boolean
+  onOpenChange?: (open: boolean) => void
+  children: React.ReactNode
 }
 
-function Select({
-  value,
-  defaultValue,
-  onValueChange,
-  open,
-  defaultOpen = false,
-  onOpenChange,
-  children,
-}: SelectProps) {
-  const [internalValue, setInternalValue] = React.useState(defaultValue);
-  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
+function Select({ value, defaultValue, onValueChange, open, defaultOpen = false, onOpenChange, children }: SelectProps) {
+  const [internalValue, setInternalValue] = React.useState(defaultValue)
+  const [internalOpen, setInternalOpen] = React.useState(defaultOpen)
 
-  const actualValue = value ?? internalValue;
-  const actualOpen = open ?? internalOpen;
+  const actualValue = value ?? internalValue
+  const actualOpen = open ?? internalOpen
 
   const handleValueChange = React.useCallback(
     (newValue: string) => {
       if (value === undefined) {
-        setInternalValue(newValue);
+        setInternalValue(newValue)
       }
-      onValueChange?.(newValue);
+      onValueChange?.(newValue)
 
       // Close the select when a value is selected
       if (open === undefined) {
-        setInternalOpen(false);
+        setInternalOpen(false)
       }
-      onOpenChange?.(false);
+      onOpenChange?.(false)
     },
     [value, onValueChange, open, onOpenChange]
-  );
+  )
 
   const handleOpenChange = React.useCallback(
     (newOpen: boolean) => {
       if (open === undefined) {
-        setInternalOpen(newOpen);
+        setInternalOpen(newOpen)
       }
-      onOpenChange?.(newOpen);
+      onOpenChange?.(newOpen)
     },
     [open, onOpenChange]
-  );
+  )
 
   return (
     <SelectContext.Provider
@@ -77,50 +69,41 @@ function Select({
     >
       <div data-slot="select">{children}</div>
     </SelectContext.Provider>
-  );
+  )
 }
 
-function SelectGroup({
-  children,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+function SelectGroup({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div data-slot="select-group" {...props}>
       {children}
     </div>
-  );
+  )
 }
 
 interface SelectValueProps extends React.HTMLAttributes<HTMLSpanElement> {
-  placeholder?: string;
+  placeholder?: string
 }
 
 function SelectValue({ placeholder, className, ...props }: SelectValueProps) {
-  const context = React.useContext(SelectContext);
-  if (!context) throw new Error("SelectValue must be used within Select");
+  const context = React.useContext(SelectContext)
+  if (!context) throw new Error('SelectValue must be used within Select')
 
-  const displayValue = context.value || placeholder;
+  const displayValue = context.value || placeholder
 
   return (
     <span data-slot="select-value" className={className} {...props}>
       {displayValue}
     </span>
-  );
+  )
 }
 
-interface SelectTriggerProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  size?: "sm" | "default";
+interface SelectTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  size?: 'sm' | 'default'
 }
 
-function SelectTrigger({
-  className,
-  size = "default",
-  children,
-  ...props
-}: SelectTriggerProps) {
-  const context = React.useContext(SelectContext);
-  if (!context) throw new Error("SelectTrigger must be used within Select");
+function SelectTrigger({ className, size = 'default', children, ...props }: SelectTriggerProps) {
+  const context = React.useContext(SelectContext)
+  if (!context) throw new Error('SelectTrigger must be used within Select')
 
   return (
     <button
@@ -138,61 +121,47 @@ function SelectTrigger({
       {children}
       <ChevronDownIcon className="size-4 opacity-50" />
     </button>
-  );
+  )
 }
 
 interface SelectContentProps extends React.HTMLAttributes<HTMLDivElement> {
-  position?: "popper";
+  position?: 'popper'
 }
 
-function SelectContent({
-  className,
-  children,
-  position = "popper",
-  ...props
-}: SelectContentProps) {
-  const context = React.useContext(SelectContext);
-  if (!context) throw new Error("SelectContent must be used within Select");
+function SelectContent({ className, children, position = 'popper', ...props }: SelectContentProps) {
+  const context = React.useContext(SelectContext)
+  if (!context) throw new Error('SelectContent must be used within Select')
 
-  if (!context.open) return null;
+  if (!context.open) return null
 
   return (
     <div
       data-slot="select-content"
       className={cn(
-        "bg-popover text-popover-foreground relative z-50 max-h-96 min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-md border shadow-md",
-        position === "popper" && "mt-1",
+        'bg-popover text-popover-foreground relative z-50 max-h-96 min-w-[8rem] overflow-x-hidden overflow-y-auto rounded-md border shadow-md',
+        position === 'popper' && 'mt-1',
         className
       )}
       {...props}
     >
       <div className="p-1">{children}</div>
     </div>
-  );
+  )
 }
 
-function SelectLabel({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-      data-slot="select-label"
-      className={cn("text-muted-foreground px-2 py-1.5 text-xs", className)}
-      {...props}
-    />
-  );
+function SelectLabel({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div data-slot="select-label" className={cn('text-muted-foreground px-2 py-1.5 text-xs', className)} {...props} />
 }
 
 interface SelectItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  value: string;
+  value: string
 }
 
 function SelectItem({ className, children, value, ...props }: SelectItemProps) {
-  const context = React.useContext(SelectContext);
-  if (!context) throw new Error("SelectItem must be used within Select");
+  const context = React.useContext(SelectContext)
+  if (!context) throw new Error('SelectItem must be used within Select')
 
-  const isSelected = context.value === value;
+  const isSelected = context.value === value
 
   return (
     <div
@@ -204,63 +173,32 @@ function SelectItem({ className, children, value, ...props }: SelectItemProps) {
       onClick={() => context.onValueChange?.(value)}
       {...props}
     >
-      <span className="absolute right-2 flex size-3.5 items-center justify-center">
-        {isSelected && <CheckIcon className="size-4" />}
-      </span>
+      <span className="absolute right-2 flex size-3.5 items-center justify-center">{isSelected && <CheckIcon className="size-4" />}</span>
       <span>{children}</span>
     </div>
-  );
+  )
 }
 
-function SelectSeparator({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-      data-slot="select-separator"
-      className={cn("bg-border pointer-events-none -mx-1 my-1 h-px", className)}
-      {...props}
-    />
-  );
+function SelectSeparator({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div data-slot="select-separator" className={cn('bg-border pointer-events-none -mx-1 my-1 h-px', className)} {...props} />
 }
 
 // These components are not strictly necessary for basic functionality
 // but included for API compatibility
-function SelectScrollUpButton({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+function SelectScrollUpButton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div
-      data-slot="select-scroll-up-button"
-      className={cn(
-        "flex cursor-default items-center justify-center py-1",
-        className
-      )}
-      {...props}
-    >
+    <div data-slot="select-scroll-up-button" className={cn('flex cursor-default items-center justify-center py-1', className)} {...props}>
       <ChevronUpIcon className="size-4" />
     </div>
-  );
+  )
 }
 
-function SelectScrollDownButton({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+function SelectScrollDownButton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div
-      data-slot="select-scroll-down-button"
-      className={cn(
-        "flex cursor-default items-center justify-center py-1",
-        className
-      )}
-      {...props}
-    >
+    <div data-slot="select-scroll-down-button" className={cn('flex cursor-default items-center justify-center py-1', className)} {...props}>
       <ChevronDownIcon className="size-4" />
     </div>
-  );
+  )
 }
 
 export {
@@ -274,4 +212,4 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-};
+}

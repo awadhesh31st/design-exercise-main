@@ -1,16 +1,26 @@
-import { FormBuilderCanvas } from "@/components/canvas";
+'use client'
 
-export default function BuilderPage() {
+import { FormBuilderCanvas } from '@/components/canvas'
+import ComponentLibrary from '@/components/ComponentLibrary'
+import { Header } from '@/components/header'
+import PropertyPanel from '@/components/PropertyPanel'
+import { useFormStore } from '@/lib/store'
+
+const BuilderPage = () => {
+  const { mode } = useFormStore()
+
+  console.log('mode', mode)
+
   return (
-    <div className="flex h-screen">
-      <aside className="w-64 border-r border-black/5">
-        <div className="flex items-center justify-between bg-white text-black p-4 border-b border-black/5 h-16">
-          <h2 className="font-semibold">Form Fields</h2>
-        </div>
-      </aside>
-      <main className="flex-1 overflow-auto">
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <div className="flex h-[calc(100vh-89px)]">
+        {mode === 'builder' && <ComponentLibrary />}
         <FormBuilderCanvas />
-      </main>
+        {mode === 'builder' && <PropertyPanel />}
+      </div>
     </div>
-  );
+  )
 }
+
+export default BuilderPage

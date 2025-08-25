@@ -2,8 +2,8 @@ import { useFormStore } from '@/lib/store'
 import { Plus } from 'lucide-react'
 import { Button } from './ui/button'
 import { Card } from './ui/card'
-import PreviewFormField from './previewFormField'
-import DraggableFormField from './draggableFormField'
+import PreviewFormField from './PreviewFormField'
+import DraggableFormField from './DraggableFormField'
 
 const FormBuilderCanvas = () => {
   const { mode, fields, selectedFieldId, draggedIndex, setDraggedIndex, moveField } = useFormStore()

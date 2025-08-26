@@ -110,7 +110,7 @@ const PropertyPanel = () => {
               <Button
                 variant="secondary"
                 size="sm"
-                className="w-full mt-3"
+                className="w-full mt-3 bg-gray-100"
                 onClick={() => {
                   const newOptions = [...(selectedField.options || []), `Option ${(selectedField.options?.length || 0) + 1}`]
                   updateField(selectedField.id, { options: newOptions })

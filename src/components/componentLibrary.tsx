@@ -34,13 +34,13 @@ const ComponentLibrary = () => {
                 {categoryComponents.map((component) => {
                   const Icon = component.icon
                   return (
-                    <Card key={component.id} className="p-4 group cursor-pointer" onClick={() => addField(component.type)}>
+                    <Card key={component.id} className="p-4 group cursor-pointer border-gray-200 hover:border-gray-300" onClick={() => addField(component.type)}>
                       <div className="flex items-start gap-3">
                         <div className="p-2 rounded-lg bg-blue-50  group-hover:bg-blue-100  transition-colors">
                           <Icon className="w-4 h-4 text-blue-600 " />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-medium text-gray-900  text-sm group-hover:text-blue-600  transition-colors">{component.label}</h4>
+                          <h4 className="font-medium text-gray-900  text-sm group-hover:text-blue-600 transition-colors">{component.label}</h4>
                           <p className="text-xs text-gray-600  mt-1 leading-relaxed">{component.description}</p>
                         </div>
                         <Plus className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors opacity-0 group-hover:opacity-100" />

@@ -29,7 +29,7 @@ const DraggableFormField: FC<DraggableFormFieldProps> = (props) => {
     const baseProps = {
       placeholder: field.placeholder,
       required: field.required,
-      className: 'w-full',
+      className: '',
       disabled: true,
     }
 
@@ -113,7 +113,7 @@ const DraggableFormField: FC<DraggableFormFieldProps> = (props) => {
           <Button
             variant="secondary"
             size="sm"
-            className="w-7 h-7 p-0 rounded-full shadow-lg bg-white  border-2 border-white "
+            className="w-7 h-7 p-0 rounded-lg shadow-lg bg-white  border-2 border-white "
             onClick={(e) => {
               e.stopPropagation()
               duplicateField(field.id)
@@ -125,7 +125,7 @@ const DraggableFormField: FC<DraggableFormFieldProps> = (props) => {
           <Button
             variant="destructive"
             size="sm"
-            className="w-7 h-7 p-0 rounded-full shadow-lg"
+            className="w-7 h-7 p-0 shadow-lg bg-red-600 rounded-lg"
             onClick={(e) => {
               e.stopPropagation()
               removeField(field.id)
@@ -148,7 +148,7 @@ const DraggableFormField: FC<DraggableFormFieldProps> = (props) => {
         </div>
 
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mt-2">
             <label className="text-sm font-medium text-gray-900  flex items-center gap-2">
               {field.label}
               {field.required && <span className="text-red-500">*</span>}

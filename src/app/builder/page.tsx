@@ -9,8 +9,6 @@ import { useFormStore } from '@/lib/store'
 const BuilderPage = () => {
   const { mode, historyIndex, history } = useFormStore()
 
-  console.log('mode', mode)
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Header canUndo={historyIndex > 0} canRedo={historyIndex < history.length - 1} />
